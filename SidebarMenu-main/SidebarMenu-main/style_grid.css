@@ -1,93 +1,140 @@
+/* Limiter la largeur totale pour éviter le débordement */
+body {
+  background: linear-gradient(135deg, #000428, #004e92);
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Empêche le défilement horizontal */
+}
+
 .home-section {
   padding: 20px;
-  background-color: #f4f4f4;
+  background: transparent;
   min-height: 100vh;
+  max-width: 1200px; /* Limite la largeur totale */
+  margin: 0 auto; /* Centre le contenu */
   box-sizing: border-box;
 }
 
-.text {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
+/* Mise à jour de la grille */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ajustable */
-  gap: 20px;
+  grid-template-columns: repeat(8, 1fr); /* 8 colonnes */
+  grid-auto-rows: 150px; /* Hauteur de base */
+  gap: 20px; /* Espacement entre les cellules */
 }
 
-
 .grid-item {
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #001f3f, #007bff);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .grid-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  transform: scale(1.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.7);
+  background: linear-gradient(135deg, #007bff, #000428);
 }
 
-/* __________________*/
+/* Tailles variées */
+.grid-item.large {
+  grid-column: span 4;
+  grid-row: span 2;
+}
 
+.grid-item.medium {
+  grid-column: span 2;
+  grid-row: span 1;
+}
 
+.grid-item.small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.grid-item.wide {
+  grid-column: span 3;
+  grid-row: span 1;
+}
+
+.grid-item.tall {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* Header futuriste */
 .header-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  background: linear-gradient(135deg, #001f3f, #000428);
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
   margin-bottom: 20px;
-  box-sizing: border-box;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  color: #fff;
 }
 
 .header-container h1 {
-  font-size: 28px;
-  font-weight: bold;
-  margin: 0 0 15px 0; /* Ajout d'un espace sous le titre */
-  color: #333;
-  text-align: center;
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 32px;
+  margin-bottom: 15px;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .search-bar input {
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ddd;
+  border: none;
   border-radius: 4px;
   margin-right: 10px;
   outline: none;
-  transition: border-color 0.3s;
+  background: #001f3f;
+  color: #fff;
+  transition: background-color 0.3s;
 }
 
 .search-bar input:focus {
-  border-color: #007bff;
+  background: #004e92;
 }
 
 .search-bar button {
   padding: 10px 20px;
   font-size: 16px;
   color: #fff;
-  background-color: #007bff;
+  background: linear-gradient(135deg, #007bff, #004e92);
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .search-bar button:hover {
-  background-color: #0056b3;
+  transform: scale(1.1);
+  background: linear-gradient(135deg, #004e92, #001f3f);
+}
+
+/* ________________ */
+
+.grid-item.medium h2,
+.grid-item.small h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.grid-item.medium p,
+.grid-item.small p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
