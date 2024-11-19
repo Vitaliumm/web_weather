@@ -46,6 +46,7 @@ async function fetchAirQualityData(city) {
         );
         const airData = await airResponse.json();
         displayAirQualityData(airData);
+        displayAirQualityChart(airData.list[0].components);
     } catch (error) {
         alert("Impossible de récupérer la qualité de l'air.");
     }
@@ -62,4 +63,66 @@ function displayAirQualityData(data) {
         "Très mauvais",
     ][aqi - 1]; // Description en fonction de l'index
     document.getElementById("air-quality").innerText = `${aqiDescription}`;
+}
+
+/* ______*/
+
+
+// Afficher un graphique des composants de qualité de l'air
+function displayAirQualityChart(components) {
+    // Charger Chart.js si non présent
+    if (typeof Chart === "undefined") {
+        const script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/npm/chart.js";
+        document.head.appendChild(script);
+        script.onload = () => renderAirQualityChart(components);
+    } else {
+        renderAirQualityChart(components);
+    }
+}
+
+// Créer et afficher le graphique
+function renderAirQualityChart(components) {
+    const chartData = {
+        labels: ["PM2.5", "PM10", "NOx", "NH3", "CO2", "SO2"],
+        datasets: [
+            {
+                label: "Air Quality Components (µg/m³)",
+                data: [
+                    components.pm2_5,
+                    components.pm10,
+                    components.nox || 0, // Replace undefined values with 0
+                    components.nh3,
+                    components.co,
+                    components.so2,
+                ],
+                backgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56",
+                    "#4BC0C0",
+                    "#9966FF",
+                    "#FF9F40",
+                ],
+            },
+        ],
+    };
+
+    const ctx = document.getElementById("airQualityChart").getContext("2d");
+    new Chart(ctx, {
+        type: "pie",
+        data: chartData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "top",
+                },
+                title: {
+                    display: true,
+                    text: "Air Quality Components",
+                },
+            },
+        },
+    });
 }

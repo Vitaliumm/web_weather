@@ -49,6 +49,9 @@
                 <a href="">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="links_name">Analytics</span>
+                    <div id="analytics-content" class="content">
+                        <canvas id="airQualityChart"></canvas>
+                    </div>
                 </a>
                 <span class="tooltip">Analytics</span>
             </li>
@@ -102,13 +105,14 @@
         </div>
         <div class="grid-container">
             <div class="grid-item large">Cellule 1</div>
-            <div class="grid-item medium">
-                <h2>Qualité de l'air</h2>
-                <p id="air-quality">Chargement...</p>
+
+            <div class="grid-item medium weather-cell">
+                <div class="weather-label">Qualité de l'air</div>
+                <div class="weather-value" id="air-quality">Chargement...</div>
             </div>
-            <div class="grid-item small">
-                <h2>Humidité</h2>
-                <p id="humidity">Chargement...</p>
+            <div class="grid-item small weather-cell">
+                <div class="weather-label">Humidité</div>
+                <div class="weather-value" id="humidity">Chargement...</div>
             </div>
             <div class="grid-item tall">Cellule 4</div>
             <div class="grid-item medium">Cellule 5</div>
