@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+    <link rel="stylesheet" href="styles_dashboard.css">
+    <link rel="stylesheet" href="style_grid.css">
+    <script src="script.js" defer></script>
+    <script src="script_weather.js" defer></script>
+    <script src="analytics.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <div class="logo_name">Weather data</div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="index.html">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="Analytics.html">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="links_name">Analytics</span>
+                </a>
+                <span class="tooltip">Analytics</span>
+            </li>
+            <li>
+                <a href="favorite.html">
+                    <i class='bx bx-heart'></i>
+                    <span class="links_name">Saved</span>
+                </a>
+                <span class="tooltip">Saved</span>
+            </li>
+            <li>
+                <a href="setting.html">
+                    <i class='bx bx-cog'></i>
+                    <span class="links_name">Settings</span>
+                </a>
+                <span class="tooltip">Settings</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="./images/profile.png" alt="profileImg">
+                    <div class="name_job">
+                        <div class="name">const Genius</div>
+                        <div class="job">Web Developer</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+    <section class="home-section">
+        <div class="header-container">
+            <h1>Analyse data </h1>
+        </div>
+        <div class="grid-container"> 
+            <div class="grid-item large weather-cell">
+                <div id="analytics-content" class="content">
+                    <canvas id="airQualityChart"></canvas>
+                </div>
+            </div>
+            <div class="grid-item large weather-cell">
+                <div id="pollutants-content" class="content">
+                    <canvas id="pollutantsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="grid-item big weather-cell">
+                <div id="analytics-content" class="content">
+                    <canvas id="temperatureHumidityChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const airQualityData = {
+                labels: ["Azote (N2)", "Oxygène (O2)", "Argon (Ar)", "Dioxyde de carbone (CO2)", "Autres"],
+                datasets: [{
+                    data: [78, 21, 0.93, 0.04, 0.03],
+                    backgroundColor: [
+                        "#4caf50",
+                        "#2196f3",
+                        "#ff9800",
+                        "#f44336",
+                        "#9c27b0"
+                    ]
+                }]
+            };
+
+            const config = {
+                type: "pie",
+                data: airQualityData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: "top",
+                            labels: {
+                                color: "#bebcbb"
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: "contenue de l'air",
+                            color: "#bebcbb"
+                        },
+                    }
+                }
+            };
+
+            const ctx = document.getElementById("airQualityChart").getContext("2d");
+            new Chart(ctx, config);
+
+            /////// bar chart polluant de l'air ///////
+
+            const pollutantsData = {
+                labels: ["PM2.5", "PM10", "NO2", "SO2", "CO"],
+                colors: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
+                datasets: [{
+                    label: "Polluants de l'air (µg/m³)",
+                    data: [25, 40, 15, 5, 10], // Simulated pollutant data
+                    backgroundColor: [
+                        "#FF6384",
+                        "#36A2EB",
+                        "#FFCE56",
+                        "#4BC0C0",
+                        "#9966FF",
+                    ]
+                }]
+            };
+
+            const pollutantsConfig = {
+                type: "bar",
+                data: pollutantsData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Désactive le ratio par défaut
+                    plugins: {
+                        legend: {
+                            position: "top",
+                            labels: {
+                                color: "#bebcbb"
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: "Polluants de l'air",
+                            color: "#bebcbb",
+                        },
+                    },
+                },
+            };
+
+            const pollutantsCtx = document.getElementById("pollutantsChart").getContext("2d");
+            new Chart(pollutantsCtx, pollutantsConfig);
+
+             //////// Line chart for Temperature and Humidity trends/////
+             const temperatureHumidityData =
+            {
+                labels: ['10:00', '12:00', '14:00', '16:00', '18:00'], // Time points for the trend
+                datasets:
+                [
+                    {
+                        label: 'Temperature (°C)',
+                        data: [22, 24, 23, 25, 26], // Simulated temperature data
+                        borderColor: '#FF5733',
+                        fill: false,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Humidity (%)',
+                        data: [50, 55, 60, 58, 57], // Simulated humidity data
+                        borderColor: '#33A1FF',
+                        fill: false,
+                        tension: 0.1
+                    }
+                ]
+            };
+
+            const lineChartConfig = 
+            {
+                type: 'line',
+                data: temperatureHumidityData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false, // Désactive le ratio par défaut
+                    plugins: {
+                        legend: {
+                            position: "top",
+                            labels: {
+                                color: "#bebcbb"
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Tendances de la température et de l\'humidité',
+                            color: "#bebcbb",
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Heure',
+                                color: "#bebcbb"
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Valeurs',
+                                color: "#bebcbb"
+                            },
+                            min: 0
+                        }
+                    }
+                }
+            };
+
+        const tempHumCtx = document.getElementById("temperatureHumidityChart").getContext("2d");
+        new Chart(tempHumCtx, lineChartConfig);
+        });
+    </script>
+
+</body>
+
+</html>

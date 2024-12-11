@@ -7,7 +7,7 @@ closeBtn.addEventListener("click", () => {
     menuBtnChange();
 })
 
-searchBtn.addEventListener("click", () => {
+searchBtn.addEventListener("click", () => { // script.js:10 Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')
     sidebar.classList.toggle("open");
     menuBtnChange();
 })

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+    <link rel="stylesheet" href="styles_dashboard.css">
+    <link rel="stylesheet" href="style_grid.css">
+    <script src="script.js" defer></script>
+    <script src="script_weather.js" defer></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <div class="logo_name">Weather data</div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list">
+            <li>
+                <a href="index.html">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="Analytics.html">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="links_name">Analytics</span>
+                </a>
+                <span class="tooltip">Analytics</span>
+            </li>
+            <li>
+                <a href="favorite.html">
+                    <i class='bx bx-heart'></i>
+                    <span class="links_name">Saved</span>
+                </a>
+                <span class="tooltip">Saved</span>
+            </li>
+            <li>
+                <a href="setting.html">
+                    <i class='bx bx-cog'></i>
+                    <span class="links_name">Settings</span>
+                </a>
+                <span class="tooltip">Settings</span>
+            </li>
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="./images/profile.png" alt="profileImg">
+                    <div class="name_job">
+                        <div class="name">const Genius</div>
+                        <div class="job">Web Developer</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out"></i>
+            </li>
+        </ul>
+    </div>
+
+    <!-- contenue ici-->
+    <section class="home-section">
+        <div class="grid-container">
+            <!-- Les cellules aimées seront ajoutées ici -->
+        </div>
+    </section>
+    
+    <div class="grid-container">
+        <div class="grid-item large weather-cell" id="cell8">
+            <div class="weather-label">Air Pollution</div>
+            <div class="weather-value" id="pm25">PM2.5: ...</div>
+            <div class="weather-value" id="pm10">PM10: ...</div>
+            <div class="weather-value" id="no2">NO2: ...</div>
+            <div class="weather-value" id="so2">SO2: ...</div>
+            <div class="weather-value" id="co">CO: ...</div>
+        </div>
+
+        <div class="grid-item large weather-cell" id="cell1">
+            <div class="weather-label">Qualité de l'air</div>
+            <div class="weather-value" id="air-quality">...</div>
+        </div>
+    
+        <div class="grid-item medium weather-cell" id="cell2">
+            <div class="weather-label">Humidité</div>
+            <div class="weather-value" id="humidity">...</div>
+        </div>
+    
+        <div class="grid-item tall weather-cell" id="cell3">
+            <div class="weather-label">Température</div>
+            <div class="weather-value" id="temperature">...</div>
+        </div>
+    
+        <div class="grid-item medium weather-cell" id="cell4">
+            <div class="weather-label">Conditions</div>
+            <div class="weather-value" id="conditions">...</div>
+        </div>
+    
+        <div class="grid-item wide weather-cell" id="cell5">
+            <div class="weather-label">Température ressentie</div>
+            <div class="weather-value" id="feels-like">...</div>
+        </div>
+    
+        <div class="grid-item small weather-cell" id="cell6">
+            <div class="weather-label">Conditions météo</div>
+            <img id="weather-icon" alt="Weather Icon" style="width: 50px; height: 50px;">
+        </div>
+    
+        <div class="grid-item medium weather-cell" id="cell7">
+            <div class="weather-label">Vitesse du vent</div>
+            <div class="weather-value" id="wind-speed">...</div>
+        </div>
+    </div>
+    
+    <script>
+        // Fonction pour récupérer les IDs des cellules aimées depuis localStorage
+       // Fonction pour récupérer les IDs des cellules aimées depuis localStorage
+function getLikedCellIds() {
+    const likedCellIds = JSON.parse(localStorage.getItem('likedCellIds')) || [];
+    return likedCellIds.filter(id => id.trim() !== "");  // Filtrer les IDs vides
+}
+
+// Récupérer les IDs des cellules aimées
+const likedCellIds = getLikedCellIds();
+
+// Pour chaque cellule dans la liste, masquez ou affichez la cellule selon si elle est aimée
+likedCellIds.forEach(cellId => {
+    if (cellId) {  // Vérifier si l'ID est valide
+        const likedCell = document.getElementById(cellId);
+        if (likedCell) {
+            likedCell.style.display = 'block'; // Afficher la cellule
+        } else {
+            console.error(`Cell with ID "${cellId}" not found in favorite.html`);
+        }
+    } else {
+        console.error("Invalid cell ID found in localStorage");
+    }
+});
+
+// Masquer les cellules non aimées
+const allCells = document.querySelectorAll('.grid-item');
+allCells.forEach(cell => {
+    if (!likedCellIds.includes(cell.id)) {
+        cell.style.display = 'none'; // Masquer les cellules non aimées
+    }
+});
+    </script>
+    
+    
+        
+    <!-- fin contenue ici-->
+
+</body>
+
+</html>
